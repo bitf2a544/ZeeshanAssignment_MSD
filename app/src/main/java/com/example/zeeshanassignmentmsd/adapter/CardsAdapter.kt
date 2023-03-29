@@ -33,7 +33,6 @@ class CardsAdapter(val context: Context,
                 .into(binding.cardIV);  // imageview object
             binding.cardIV.setOnClickListener {
                 cardItemClickListener.onCLick(card)
-                //sdsds
             };
 
         }

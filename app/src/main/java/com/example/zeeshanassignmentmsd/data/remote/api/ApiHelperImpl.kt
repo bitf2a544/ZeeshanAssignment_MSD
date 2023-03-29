@@ -8,6 +8,4 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
 
     override suspend fun getLatestDecOfCardsFromAPI(count: Int?): Response<DeckOfCards> =
         apiService.getLatestDecOfCards(count)
-
-
 }

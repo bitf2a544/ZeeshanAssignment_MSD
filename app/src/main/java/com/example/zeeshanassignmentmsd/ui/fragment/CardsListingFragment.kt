@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 @AndroidEntryPoint
 class CardsListingFragment : Fragment(), CardItemClickListener {
     private lateinit var binding: CardsListFragmentBinding
@@ -49,7 +48,7 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
 
     private fun setUpCurrencyRecyclerView() {
         binding.currencyRecyclerView.layoutManager = GridLayoutManager(activity, 3)
-        cardsAdapter = CardsAdapter(requireContext(), arrayListOf(),this)
+        cardsAdapter = CardsAdapter(requireContext(), arrayListOf(), this)
         binding.currencyRecyclerView.addItemDecoration(
             DividerItemDecoration(
                 binding.currencyRecyclerView.context,
