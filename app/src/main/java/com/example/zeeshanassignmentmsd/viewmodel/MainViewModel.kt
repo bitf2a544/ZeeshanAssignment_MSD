@@ -3,7 +3,6 @@ package com.example.zeeshanassignmentmsd.viewmodel
 import androidx.lifecycle.*
 import com.example.zeeshanassignmentmsd.data.model.DeckOfCards
 import com.example.zeeshanassignmentmsd.repository.MainRepository
-import com.example.zeeshanassignmentmsd.utils.NetworkHelper
 import com.example.zeeshanassignmentmsd.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 
@@ -14,10 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
-    private val networkHelper: NetworkHelper
-) : ViewModel() {
+class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     private val _deckOfCards = MutableLiveData<Resource<DeckOfCards>>()
     val deckOfCards: LiveData<Resource<DeckOfCards>> get() = _deckOfCards
@@ -31,7 +27,7 @@ class MainViewModel @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
             viewModelScope.launch {
                 try {
-                    if (networkHelper.isNetworkConnected()) {
+                    if (mainRepository.isNetworkAvailable()) {
                         mainRepository.getLatestDecOfCardsFromNetwork(20)
                             .let {
                                 if (it.isSuccessful) {
