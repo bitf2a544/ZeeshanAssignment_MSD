@@ -1,6 +1,5 @@
 package com.example.zeeshanassignmentmsd.ui.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,19 +8,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.zeeshanassignmentmsd.R
 import com.example.zeeshanassignmentmsd.adapter.CardsAdapter
 import com.example.zeeshanassignmentmsd.data.model.DeckCard
 import com.example.zeeshanassignmentmsd.databinding.CardsListFragmentBinding
 import com.example.zeeshanassignmentmsd.ui.CardItemClickListener
-import com.example.zeeshanassignmentmsd.ui.activity.CardActivity
 import com.example.zeeshanassignmentmsd.utils.Constants.Companion.CARD_PARAM
 import com.example.zeeshanassignmentmsd.utils.Status
 import com.example.zeeshanassignmentmsd.viewmodel.MainViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -93,9 +94,33 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
     }
 
     override fun onCLick(deckCard: DeckCard) {
-        startActivity(
-            Intent(requireContext(), CardActivity::class.java).putExtra(CARD_PARAM, deckCard)
-        )
+
+
+       /* Navigation.findNavController(this,CardsListFragment).navigate(R.id.action_fragment1_to_fragment2);
+        Navigation.findNavController(view).navigate(R.id.action_fragment1_to_fragment2);
+*/
+
+
+        //val navController = findNavController(R.id.nav_host_fragment)
+        val navHostFragment = parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as CardsListingFragment
+        val navController = navHostFragment.nav_host_fragment
+
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+       /* appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), binding.drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)*/
+        //binding.navView.setupWithNavController(navController)
+
+        val bundle = Bundle()
+        bundle.putParcelable(CARD_PARAM, deckCard)
+
+        navController.findNavController().navigate(R.id.cardFragment,bundle)
+
+
+//        startActivity(
+//            Intent(requireContext(), CardActivity::class.java).putExtra(CARD_PARAM, deckCard)
+//        )
     }
 
 }

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph"
+    android:id="@+id/my_nav_graph"
     app:startDestination="@id/CardsListFragment">
 
     <fragment
@@ -10,7 +10,7 @@
         android:name="com.example.zeeshanassignmentmsd.ui.fragment.CardsListingFragment"
         android:label="cards_list_fragment"
         app:defaultNavHost="true"
-        tools:layout="@layout/cards_list_fragment" >
+        tools:layout="@layout/cards_list_fragment">
         <action
             android:id="@+id/action_CardsListFragment_to_cardFragment"
             app:destination="@id/cardFragment" />

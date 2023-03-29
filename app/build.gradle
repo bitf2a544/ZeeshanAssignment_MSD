@@ -12,12 +12,11 @@ android {
         experimental = true
     }
     defaultConfig {
-        applicationId "com.example.zeeshanassignmentpaypay"
+        applicationId "com.example.zeeshanassignmentmsd"
         minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"
-        /*buildConfigField 'String', 'BASE_URL', "\"https://openexchangerates.org/\""*/
         buildConfigField 'String', 'BASE_URL', "\"https://deckofcardsapi.com/\""
         buildConfigField 'String', 'API_KEY', "\"1006294af43f4e10933de4b6c2bdcc14\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
