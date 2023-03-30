@@ -13,7 +13,8 @@ class MainRepository @Inject constructor(
         apiHelper.getLatestDecOfCardsFromAPI(count)
 
     fun isNetworkAvailable(): Boolean {
-        return networkHelper.isNetworkConnected()
+       return networkHelper.isNetworkConnected()
+       // return true
     }
 
 }

@@ -39,6 +39,7 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
     ): View? {
         binding = CardsListFragmentBinding.inflate(layoutInflater)
         setupUI()
+        fetchCardsListing()
         setupObserver()
         return binding.root
     }
@@ -61,6 +62,10 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
     }
 
 
+    private fun fetchCardsListing() {
+        mainViewModel.fetchLatestDeckCardsListing()
+    }
+
     private fun setupObserver() {
         mainViewModel.deckOfCards.observe(viewLifecycleOwner) {
             when (it.status) {
@@ -69,7 +74,7 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
                         binding.progressBar.visibility = View.GONE
                         binding.currencyRecyclerView.visibility = View.VISIBLE
                         val decOfCardsObject = it.data?.cards
-                        Log.e("cards", "abc=" + Gson().toJson(decOfCardsObject))
+                        // Log.e("cards", "=" + Gson().toJson(decOfCardsObject))
                         if (decOfCardsObject != null) {
                             renderCardsList(decOfCardsObject as MutableList<DeckCard>)
                         }
@@ -89,38 +94,16 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
 
     private fun renderCardsList(cardsList: MutableList<DeckCard>) {
         cardsAdapter.updateData(cardsList)
-        cardsAdapter.notifyDataSetChanged()
-
     }
 
     override fun onCLick(deckCard: DeckCard) {
-
-
-       /* Navigation.findNavController(this,CardsListFragment).navigate(R.id.action_fragment1_to_fragment2);
-        Navigation.findNavController(view).navigate(R.id.action_fragment1_to_fragment2);
-*/
-
-
-        //val navController = findNavController(R.id.nav_host_fragment)
-        val navHostFragment = parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as CardsListingFragment
-        val navController = navHostFragment.nav_host_fragment
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-       /* appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), binding.drawerLayout)
-        setupActionBarWithNavController(navController, appBarConfiguration)*/
-        //binding.navView.setupWithNavController(navController)
-
         val bundle = Bundle()
         bundle.putParcelable(CARD_PARAM, deckCard)
 
-        navController.findNavController().navigate(R.id.cardFragment,bundle)
-
-
-//        startActivity(
-//            Intent(requireContext(), CardActivity::class.java).putExtra(CARD_PARAM, deckCard)
-//        )
+        val navHostFragment =
+            parentFragmentManager.findFragmentById(R.id.nav_host_fragment) as CardsListingFragment
+        val navController = navHostFragment.nav_host_fragment
+        navController.findNavController().navigate(R.id.cardFragment, bundle)
     }
 
 }

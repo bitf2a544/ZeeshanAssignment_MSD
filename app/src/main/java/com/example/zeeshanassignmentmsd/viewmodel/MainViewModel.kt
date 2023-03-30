@@ -18,11 +18,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     private val _deckOfCards = MutableLiveData<Resource<DeckOfCards>>()
     val deckOfCards: LiveData<Resource<DeckOfCards>> get() = _deckOfCards
 
-    init {
-        fetchLatestDeckCardsListing()
-    }
-
-    private fun fetchLatestDeckCardsListing() {
+    fun fetchLatestDeckCardsListing() {
         _deckOfCards.postValue(Resource.loading(null))
         CoroutineScope(Dispatchers.IO).launch {
             viewModelScope.launch {
@@ -51,6 +47,10 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
                 }
             }
         }
+    }
+
+    fun getDeckOfCardsMutableLiveData(): LiveData<Resource<DeckOfCards>?> {
+        return _deckOfCards
     }
 
 }

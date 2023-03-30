@@ -10,10 +10,11 @@ import com.example.zeeshanassignmentmsd.data.model.DeckCard
 import com.example.zeeshanassignmentmsd.databinding.CardItemLayoutBinding
 import com.example.zeeshanassignmentmsd.ui.CardItemClickListener
 
-class CardsAdapter(val context: Context,
-                   private var cardsList: MutableList<DeckCard>,
-                   val  cardItemClickListener1 : CardItemClickListener
-                   ) :
+class CardsAdapter(
+    val context: Context,
+    private var cardsList: MutableList<DeckCard>,
+    private val cardItemClickListener1: CardItemClickListener
+) :
 
     RecyclerView.Adapter<CardsAdapter.DataViewHolder>() {
 
@@ -22,13 +23,8 @@ class CardsAdapter(val context: Context,
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(card: DeckCard) {
-
-
             Glide.with(context)
                 .load(card.image) // image url
-                //   .placeholder(R.drawable.placeholder) // any placeholder to load at start
-                //   .error(R.drawable.imagenotfound)  // any image in case of error
-               // .override(200, 200) // resizing
                 .centerCrop()
                 .into(binding.cardIV);  // imageview object
             binding.cardIV.setOnClickListener {
@@ -40,7 +36,7 @@ class CardsAdapter(val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         binding = CardItemLayoutBinding.inflate(
-            LayoutInflater.from(parent.getContext()),
+            LayoutInflater.from(parent.context),
             parent,
             false
         );
@@ -56,6 +52,7 @@ class CardsAdapter(val context: Context,
     fun updateData(list: MutableList<DeckCard>) {
         cardsList = mutableListOf()
         cardsList = list;
+        notifyDataSetChanged()
     }
 
 }

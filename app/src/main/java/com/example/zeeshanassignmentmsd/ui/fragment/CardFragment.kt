@@ -2,13 +2,14 @@ package com.example.zeeshanassignmentmsd.ui.fragment
 
 import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+
 import com.example.zeeshanassignmentmsd.data.model.DeckCard
 import com.example.zeeshanassignmentmsd.databinding.FragmentCardBinding
 import com.example.zeeshanassignmentmsd.utils.Constants
@@ -18,13 +19,14 @@ import ja.burhanrashid52.photoeditor.PhotoFilter
 class CardFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentCardBinding
-    private lateinit var deckCardObj: DeckCard
+    private var deckCardObj: DeckCard? = null
     private lateinit var spinnerArrayAdapter: ArrayAdapter<String>
-    var mImageFilterList = mutableListOf<String>(
-        "Select Filter", "NONE", "BRIGHTNESS",
-        "CONTRAST", "CROSS_PROCESS", "DOCUMENTARY", "DUE_TONE"
-    )
     private var mPhotoEditor: PhotoEditor? = null
+
+    private var mImageFilterList = mutableListOf<String>(
+        "Select Filter", "NONE", "CROSS_PROCESS", "DOCUMENTARY", "DUE_TONE",
+        "SATURATE", "SEPIA", "SHARPEN", "TEMPERATURE", "TINT", "VIGNETTE"
+    )
 
 
     override fun onCreateView(
@@ -32,7 +34,6 @@ class CardFragment : Fragment(), AdapterView.OnItemSelectedListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentCardBinding.inflate(inflater, container, false)
 
         deckCardObj = arguments?.getParcelable(Constants.CARD_PARAM)!!
@@ -43,36 +44,37 @@ class CardFragment : Fragment(), AdapterView.OnItemSelectedListener {
         loadImageInPhotoView()
         setUpSpinner()
         return binding.root
-
-
     }
 
     private fun setTextInCardView() {
-        binding.cardSuit.text = "Suit: " + deckCardObj?.suit.toString()
+        deckCardObj?.let {
+            binding.cardSuit.text = "Suit: " + it.suit.toString()
+        }
     }
 
     private fun initPhotoEditorView() {
         mPhotoEditor = PhotoEditor.Builder(requireContext(), binding.photoEditorView)
             .setPinchTextScalable(true)
             .setClipSourceImage(true)
-            //   .setDefaultTextTypeface(mTextRobotoTf)
-            //   .setDefaultEmojiTypeface(mEmojiTypeFace)
             .build()
     }
 
     private fun loadImageInImageView() {
-        Glide.with(requireContext())
-            .load(deckCardObj?.image) // image url
-            .fitCenter()
-            .into(binding.cardImage);  // imageview
-
+        deckCardObj?.let {
+            Glide.with(requireContext())
+                .load(it.image) // image url
+                .fitCenter()
+                .into(binding.cardImage);  // imageview
+        }
     }
 
     private fun loadImageInPhotoView() {
-        Glide.with(requireContext())
-            .load(deckCardObj?.image) // image url
-            .fitCenter()
-            .into(binding.photoEditorView.source);  // imageview
+        deckCardObj?.let {
+            Glide.with(requireContext())
+                .load(it.image) // image url
+                .fitCenter()
+                .into(binding.photoEditorView.source);  // imageview
+        }
     }
 
     private fun setUpSpinner() {
@@ -90,18 +92,26 @@ class CardFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(arg0: AdapterView<*>?, arg1: View?, position: Int, id: Long) {
         var str = mImageFilterList.get(position).toString();
-        if (str.equals("NONE")) {
+        if (str == "NONE") {
             mPhotoEditor?.setFilterEffect(PhotoFilter.NONE);
-        } else if (str.equals("BRIGHTNESS")) {
-            mPhotoEditor?.setFilterEffect(PhotoFilter.BRIGHTNESS);
-        } else if (str.equals("CONTRAST")) {
-            mPhotoEditor?.setFilterEffect(PhotoFilter.CONTRAST);
-        } else if (str.equals("CROSS_PROCESS")) {
+        } else if (str == "CROSS_PROCESS") {
             mPhotoEditor?.setFilterEffect(PhotoFilter.CROSS_PROCESS);
-        } else if (str.equals("DOCUMENTARY")) {
+        } else if (str == "DOCUMENTARY") {
             mPhotoEditor?.setFilterEffect(PhotoFilter.DOCUMENTARY);
-        } else if (str.equals("DUE_TONE")) {
+        } else if (str == "DUE_TONE") {
             mPhotoEditor?.setFilterEffect(PhotoFilter.DUE_TONE);
+        } else if (str == "SATURATE") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.SATURATE);
+        } else if (str == "SEPIA") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.SEPIA);
+        } else if (str == "SHARPEN") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.SHARPEN);
+        } else if (str == "TEMPERATURE") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.TEMPERATURE);
+        } else if (str == "TINT") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.TINT);
+        } else if (str == "VIGNETTE") {
+            mPhotoEditor?.setFilterEffect(PhotoFilter.VIGNETTE);
         } else {
             mPhotoEditor?.setFilterEffect(PhotoFilter.NONE);
         }
