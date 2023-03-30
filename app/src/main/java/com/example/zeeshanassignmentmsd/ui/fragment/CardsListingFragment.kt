@@ -74,7 +74,6 @@ class CardsListingFragment : Fragment(), CardItemClickListener {
                         binding.progressBar.visibility = View.GONE
                         binding.currencyRecyclerView.visibility = View.VISIBLE
                         val decOfCardsObject = it.data?.cards
-                        // Log.e("cards", "=" + Gson().toJson(decOfCardsObject))
                         if (decOfCardsObject != null) {
                             renderCardsList(decOfCardsObject as MutableList<DeckCard>)
                         }

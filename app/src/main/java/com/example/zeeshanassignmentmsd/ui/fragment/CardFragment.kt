@@ -79,8 +79,7 @@ class CardFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setUpSpinner() {
         binding.spinner.onItemSelectedListener = this
-        //Creating the ArrayAdapter instance having the country list
-
+       
         spinnerArrayAdapter = ArrayAdapter<String>(
             requireContext(), R.layout.simple_spinner_item,
             mImageFilterList
